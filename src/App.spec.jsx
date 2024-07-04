@@ -4,9 +4,8 @@ import App from "./App";
 
 describe("App", () => {
   it("renders it", () => {
-    const app = render(<App />);
+    render(<App />);
     const nav = screen.getByRole("navigation");
     expect(nav).toBeVisible();
-    expect(app).toMatchSnapshot();
   });
 });

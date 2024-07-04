@@ -1,0 +1,11 @@
+.main-nav {
+  background-color: var(--secondary-container);
+  color: var(--on-secondary-container);
+  display: flex;
+  border: 1px solid var(--outline);
+  max-width: fit-content;
+  margin: 0 auto;
+  gap: clamp(4rem, 40vw, 30rem);
+  padding: clamp(0.5rem, 1vw, 1rem) clamp(1rem, 2vw, 2rem);
+  border-radius: var(--large-radius);
+}

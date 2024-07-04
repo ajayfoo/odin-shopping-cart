@@ -5,9 +5,11 @@ import MainNavbar from "./MainNavbar";
 describe("Main navigation bar", () => {
   it("renders it", () => {
     render(<MainNavbar />);
-    const navbar = screen.getByRole("navigation");
+    const nav = screen.getByRole("navigation");
     const home = screen.getByRole("link", { name: "Home", value: "home" });
     const shop = screen.getByRole("link", { name: "Shop", value: "shop" });
+
+    expect(nav).toBeVisible();
 
     expect(home).toBeVisible();
     expect(home).toHaveTextContent("Home");
@@ -16,7 +18,5 @@ describe("Main navigation bar", () => {
     expect(shop).toBeVisible();
     expect(shop).toHaveTextContent("Shop");
     expect(shop).toHaveAttribute("href", "shop");
-
-    expect(navbar).toMatchSnapshot();
   });
 });

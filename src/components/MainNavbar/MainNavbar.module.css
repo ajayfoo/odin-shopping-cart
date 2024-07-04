@@ -4,8 +4,13 @@
   display: flex;
   border: 1px solid var(--outline);
   max-width: fit-content;
-  margin: 0 auto;
-  gap: clamp(4rem, 40vw, 30rem);
-  padding: clamp(0.5rem, 1vw, 1rem) clamp(1rem, 2vw, 2rem);
+  margin: var(--small-gap) auto;
+  gap: clamp(4rem, 20vw, 10rem);
+  padding: var(--small-gap) var(--medium-gap);
   border-radius: var(--large-radius);
+}
+
+.main-nav > a {
+  text-decoration: none;
+  font-size: var(--medium-font);
 }

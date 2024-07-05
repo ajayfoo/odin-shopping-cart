@@ -8,14 +8,14 @@ describe("Main navigation bar", () => {
     screen.getByRole("navigation");
 
     const home = screen.getByRole("link", { name: "Home", value: "home" });
-    const shop = screen.getByRole("link", { name: "Shop", value: "shop" });
+    const shop = screen.getByRole("link", { name: "Cart", value: "cart" });
 
     expect(home).toBeVisible();
     expect(home).toHaveTextContent("Home");
     expect(home).toHaveAttribute("href", "/");
 
     expect(shop).toBeVisible();
-    expect(shop).toHaveTextContent("Shop");
-    expect(shop).toHaveAttribute("href", "shop");
+    expect(shop).toHaveTextContent("Cart");
+    expect(shop).toHaveAttribute("href", "cart");
   });
 });

@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import classes from "./MainNavbar.module.css";
 
 export default function MainNavbar() {
   return (
     <nav className={classes["main-nav"]}>
-      <a href="/">Home</a>
-      <a href="shop">Shop</a>
+      <Link to="/">Home</Link>
+      <Link to="cart">Cart</Link>
     </nav>
   );
 }

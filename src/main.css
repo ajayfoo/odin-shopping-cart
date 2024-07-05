@@ -9,8 +9,8 @@
   --small-gap: clamp(0.5rem, 1vw, 1rem);
   --medium-gap: clamp(2rem, 4vw, 4rem);
   --small-font: clamp(0.5rem, 1vw, 0.8rem);
-  --normal-font: clamp(1rem, 2vw, 1.1rem);
-  --medium-font: clamp(1.2rem, 3vw, 1.4rem);
+  --normal-font: clamp(1rem, 1.5vw, 1.1rem);
+  --medium-font: clamp(1.2rem, 2vw, 1.4rem);
 }
 *,
 *::before,

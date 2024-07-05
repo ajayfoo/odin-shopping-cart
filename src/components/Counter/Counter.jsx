@@ -1,14 +1,14 @@
 import PropTypes from "prop-types";
 
-const Counter = ({ count, setCount }) => {
+const Counter = ({ count, onIncrement, onDecrement }) => {
   return (
     <>
-      <button aria-label="increment" onClick={() => setCount(count + 1)}>
-        +
+      <button aria-label="decrement" onClick={onDecrement}>
+        -
       </button>
       <p aria-label={count + " item(s)"}>{count}</p>
-      <button aria-label="decrement" onClick={() => setCount(count - 1)}>
-        -
+      <button aria-label="increment" onClick={onIncrement}>
+        +
       </button>
     </>
   );
@@ -16,7 +16,8 @@ const Counter = ({ count, setCount }) => {
 
 Counter.propTypes = {
   count: PropTypes.number.isRequired,
-  setCount: PropTypes.func.isRequired,
+  onDecrement: PropTypes.func.isRequired,
+  onIncrement: PropTypes.func.isRequired,
 };
 
 export default Counter;

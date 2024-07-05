@@ -5,9 +5,8 @@ import userEvent from "@testing-library/user-event";
 
 describe("Counter", () => {
   it("renders it", async () => {
-    const setCount = vi.fn();
     const count = 2;
-    render(<Counter count={count} setCount={setCount} />);
+    render(<Counter count={2} onIncrement={vi.fn()} onDecrement={vi.fn()} />);
 
     const countEle = screen.getByRole("paragraph", {
       name: count + " item(s)",
@@ -25,14 +24,23 @@ describe("Counter", () => {
     expect(decrementBtn.textContent).toBe("-");
   });
 
-  it("calls setCount on increment and decrement", async () => {
+  it("calls onIncrement and onDecrement", async () => {
     const user = userEvent.setup();
-    const setCount = vi.fn();
-    render(<Counter count={2} setCount={setCount} />);
+    const incrementCount = vi.fn();
+    const decrementCount = vi.fn();
+    render(
+      <Counter
+        count={2}
+        onIncrement={incrementCount}
+        onDecrement={decrementCount}
+      />
+    );
     const incrementBtn = screen.getByRole("button", { name: "increment" });
     const decrementBtn = screen.getByRole("button", { name: "decrement" });
     await user.click(incrementBtn);
+    expect(incrementCount).toBeCalledTimes(1);
+
     await user.click(decrementBtn);
-    expect(setCount).toBeCalledTimes(2);
+    expect(decrementCount).toBeCalledTimes(1);
   });
 });

@@ -3,12 +3,17 @@ import { describe, it, expect, vi } from "vitest";
 import ProductCard from "./ProductCard";
 
 vi.mock("../Counter/Counter", () => {
-  const mockedCounter = ({ count, onDecrement, onIncrement }) => (
+  const mockedCounter = ({ count, onDecrement, onIncrement, onEdit }) => (
     <>
       <div onClick={onDecrement} data-testid="decr-count">
         -
       </div>
-      <div data-testid="curr-count">{count}</div>
+      <input
+        type="text"
+        data-testid="curr-count"
+        value={count}
+        onChange={onEdit}
+      />
       <div onClick={onIncrement} data-testid="incr-count">
         +
       </div>
@@ -22,7 +27,7 @@ vi.mock("../Counter/Counter", () => {
 describe("ProductCard", () => {
   it("renders it", async () => {
     render(<ProductCard />);
-    const count = screen.getByTestId("curr-count");
-    expect(count.textContent).toMatch(0);
+    const countEle = screen.getByTestId("curr-count");
+    expect(countEle).toHaveValue("0");
   });
 });

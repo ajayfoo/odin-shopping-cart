@@ -6,22 +6,25 @@ import userEvent from "@testing-library/user-event";
 describe("Counter", () => {
   it("renders it", async () => {
     const count = 2;
-    render(<Counter count={2} onIncrement={vi.fn()} onDecrement={vi.fn()} />);
+    const fn = vi.fn();
+    render(
+      <Counter count={count} onIncrement={fn} onDecrement={fn} onEdit={fn} />
+    );
 
-    const countEle = screen.getByRole("paragraph", {
-      name: count + " item(s)",
+    const input = screen.getByRole("textbox", {
+      name: count,
     });
     const incrementBtn = screen.getByRole("button", { name: "increment" });
     const decrementBtn = screen.getByRole("button", { name: "decrement" });
 
     expect(incrementBtn).toBeVisible();
-    expect(incrementBtn.textContent).toBe("+");
+    expect(incrementBtn).toHaveTextContent("+");
 
-    expect(countEle).toBeVisible();
-    expect(countEle.textContent).toMatch(count);
+    expect(input).toBeVisible();
+    expect(input).toHaveValue(count.toString());
 
     expect(decrementBtn).toBeVisible();
-    expect(decrementBtn.textContent).toBe("-");
+    expect(decrementBtn).toHaveTextContent("-");
   });
 
   it("calls onIncrement and onDecrement", async () => {
@@ -30,9 +33,10 @@ describe("Counter", () => {
     const decrementCount = vi.fn();
     render(
       <Counter
-        count={2}
+        count={0}
         onIncrement={incrementCount}
         onDecrement={decrementCount}
+        onEdit={vi.fn()}
       />
     );
     const incrementBtn = screen.getByRole("button", { name: "increment" });
@@ -42,5 +46,27 @@ describe("Counter", () => {
 
     await user.click(decrementBtn);
     expect(decrementCount).toBeCalledTimes(1);
+  });
+
+  it("sets count via input", async () => {
+    const user = userEvent.setup();
+    const incrementCount = vi.fn();
+    const decrementCount = vi.fn();
+    const onEdit = vi.fn();
+    const count = 2;
+    render(
+      <Counter
+        count={count}
+        onIncrement={incrementCount}
+        onDecrement={decrementCount}
+        onEdit={onEdit}
+      />
+    );
+
+    const newCount = 8;
+    const input = screen.getByRole("textbox", { name: count });
+    await user.click(input);
+    await user.keyboard(newCount.toString());
+    expect(onEdit).toBeCalled(1);
   });
 });

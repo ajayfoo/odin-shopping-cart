@@ -1,0 +1,27 @@
+.product-card {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--small-gap);
+  border-radius: var(--medium-radius);
+  border: 1px solid white;
+}
+
+.image {
+  border-radius: var(--medium-radius) var(--medium-radius) 0 0;
+  grid-column: 1/-1;
+}
+
+.controls {
+  display: inline-grid;
+  gap: var(--small-gap);
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  padding: var(--small-gap);
+  padding-block-start: 0;
+}
+
+.controls > button {
+  border-radius: var(--medium-radius);
+  border: none;
+  padding: var(--x-small-gap) var(--small-gap);
+}

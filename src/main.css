@@ -6,6 +6,7 @@
   --small-radius: 4px;
   --medium-radius: 8px;
   --large-radius: 16px;
+  --x-small-gap: clamp(0.25rem, 0.5vw, 0.5rem);
   --small-gap: clamp(0.5rem, 1vw, 1rem);
   --medium-gap: clamp(2rem, 4vw, 4rem);
   --small-font: clamp(0.5rem, 1vw, 0.8rem);
@@ -20,6 +21,11 @@
 body,
 p {
   margin: 0;
+}
+
+img {
+  max-inline-size: 100%;
+  block-size: auto;
 }
 @media screen and (prefers-color-scheme: light) {
   :root {

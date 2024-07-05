@@ -7,7 +7,13 @@ const Counter = ({ count, onDecrement, onIncrement, onEdit }) => {
       <button aria-label="decrement" onClick={onDecrement}>
         -
       </button>
-      <input type="text" aria-label={count} value={count} onChange={onEdit} />
+      <input
+        className={classes["count"]}
+        type="text"
+        aria-label={count}
+        value={count}
+        onChange={onEdit}
+      />
       <button aria-label="increment" onClick={onIncrement}>
         +
       </button>

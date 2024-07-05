@@ -1,7 +1,9 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import Counter from "../Counter/Counter";
+import classes from "./ProductCard.module.css";
 
-const ProductCard = () => {
+const ProductCard = ({ imgSrc, title, price }) => {
   const [count, setCount] = useState(0);
 
   const handleDecrement = () => {
@@ -10,6 +12,7 @@ const ProductCard = () => {
   const handleIncrement = () => {
     setCount(count + 1);
   };
+
   const handleEdit = ({ target: { value } }) => {
     if (value === "" || isNaN(value)) {
       setCount(0);
@@ -19,13 +22,27 @@ const ProductCard = () => {
   };
 
   return (
-    <Counter
-      count={count}
-      onDecrement={handleDecrement}
-      onIncrement={handleIncrement}
-      onEdit={handleEdit}
-    />
+    <div className={classes["product-card"]}>
+      <img className={classes["image"]} src={imgSrc} />
+      <div className={classes["controls"]}>
+        <p aria-label={title}>{title}</p>
+        <Counter
+          count={count}
+          onDecrement={handleDecrement}
+          onIncrement={handleIncrement}
+          onEdit={handleEdit}
+        />
+        <p>Price: {price} INR</p>
+        <button type="button">Add To Cart</button>
+      </div>
+    </div>
   );
+};
+
+ProductCard.propTypes = {
+  imgSrc: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
 };
 
 export default ProductCard;

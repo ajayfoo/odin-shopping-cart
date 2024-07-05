@@ -1,10 +1,39 @@
 import ProductCard from "../ProductCard/ProductCard";
+import classes from "./Home.module.css";
 
 export default function Home() {
   return (
-    <>
-      <ProductCard imgSrc="src/temp/jaggery.jpg" title="Jaggery" price={90} />
-      <p>HOME</p>
-    </>
+    <div className={classes.home}>
+      <ProductCard
+        imgSrc="src/images/t-shirt.jpg"
+        title="White T-Shirt"
+        price={540}
+      />
+      <ProductCard
+        imgSrc="src/images/t-shirt.jpg"
+        title="White T-Shirt"
+        price={540}
+      />
+      <ProductCard
+        imgSrc="src/images/t-shirt.jpg"
+        title="White T-Shirt"
+        price={540}
+      />
+      <ProductCard
+        imgSrc="src/images/t-shirt.jpg"
+        title="White T-Shirt"
+        price={540}
+      />
+      <ProductCard
+        imgSrc="src/images/t-shirt.jpg"
+        title="White T-Shirt"
+        price={540}
+      />
+      <ProductCard
+        imgSrc="src/images/t-shirt.jpg"
+        title="White T-Shirt"
+        price={540}
+      />
+    </div>
   );
 }

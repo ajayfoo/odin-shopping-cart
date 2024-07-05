@@ -23,7 +23,7 @@ const ProductCard = ({ imgSrc, title, price }) => {
 
   return (
     <div className={classes["product-card"]}>
-      <img className={classes["image"]} src={imgSrc} />
+      <img className={classes["image"]} src={imgSrc} alt={title} />
       <div className={classes["controls"]}>
         <p aria-label={title}>{title}</p>
         <Counter
@@ -32,7 +32,7 @@ const ProductCard = ({ imgSrc, title, price }) => {
           onIncrement={handleIncrement}
           onEdit={handleEdit}
         />
-        <p>Price: {price} INR</p>
+        <p className={classes["price"]}>{price} INR</p>
         <button type="button">Add To Cart</button>
       </div>
     </div>

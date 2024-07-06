@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Counter from "../Counter/Counter";
 import classes from "./ProductCard.module.css";
 
-const ProductCard = ({ imgSrc, title, price }) => {
+const ProductCard = ({ imgSrc, name, price }) => {
   const [count, setCount] = useState(0);
 
   const handleDecrement = () => {
@@ -22,26 +22,31 @@ const ProductCard = ({ imgSrc, title, price }) => {
   };
 
   return (
-    <div className={classes["product-card"]}>
-      <img className={classes["image"]} src={imgSrc} alt={title} />
+    <article
+      aria-label={name + " product card"}
+      className={classes["product-card"]}
+    >
+      <img className={classes["image"]} src={imgSrc} alt={name} />
       <div className={classes["controls"]}>
-        <p aria-label={title}>{title}</p>
+        <p aria-label={"name"}>{name}</p>
         <Counter
           count={count}
           onDecrement={handleDecrement}
           onIncrement={handleIncrement}
           onEdit={handleEdit}
         />
-        <p className={classes["price"]}>{price} INR</p>
+        <p aria-label="price" className={classes["price"]}>
+          {price} INR
+        </p>
         <button type="button">Add To Cart</button>
       </div>
-    </div>
+    </article>
   );
 };
 
 ProductCard.propTypes = {
   imgSrc: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
 };
 

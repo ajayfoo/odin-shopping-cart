@@ -7,7 +7,7 @@ const ProductCard = ({ imgSrc, title, price }) => {
   const [count, setCount] = useState(0);
 
   const handleDecrement = () => {
-    setCount(count <= 0 ? 0 : count + 1);
+    setCount(count <= 0 ? 0 : count - 1);
   };
   const handleIncrement = () => {
     setCount(count + 1);

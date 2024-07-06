@@ -4,19 +4,22 @@
 }
 
 .count {
+  font-size: var(--normal-reverse-font);
   max-inline-size: 5ch;
   text-align: end;
   border-radius: var(--small-radius);
-  border: 1px solid var(--outline);
+  border: none;
   outline-color: var(--outline);
   background-color: var(--tertiary-container);
   color: var(--on-tertiary-container);
 }
 
 .counter > button {
+  font-size: var(--normal-reverse-font);
   background-color: var(--secondary);
   color: var(--on-secondary);
   border: none;
   border-radius: 50%;
-  max-inline-size: max-content;
+  inline-size: 2.25ch;
+  block-size: 2.25ch;
 }

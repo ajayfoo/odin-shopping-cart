@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import classes from "./Counter.module.css";
+import { makeid } from "../../utils";
 
 const Counter = ({ count, onDecrement, onIncrement, onEdit }) => {
   return (
@@ -8,6 +9,7 @@ const Counter = ({ count, onDecrement, onIncrement, onEdit }) => {
         -
       </button>
       <input
+        id={"counter-count-" + makeid(5)}
         className={classes.count}
         type="text"
         aria-label={count}

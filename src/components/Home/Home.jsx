@@ -3,7 +3,7 @@ import classes from "./Home.module.css";
 
 export default function Home() {
   return (
-    <div className={classes.home}>
+    <div aria-label="home page" className={classes.home}>
       <ProductCard
         imgSrc="src/images/t-shirt.jpg"
         name="White T-Shirt"

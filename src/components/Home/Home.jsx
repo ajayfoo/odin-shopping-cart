@@ -6,32 +6,32 @@ export default function Home() {
     <div className={classes.home}>
       <ProductCard
         imgSrc="src/images/t-shirt.jpg"
-        title="White T-Shirt"
+        name="White T-Shirt"
         price={540}
       />
       <ProductCard
         imgSrc="src/images/t-shirt.jpg"
-        title="White T-Shirt"
+        name="White T-Shirt"
         price={540}
       />
       <ProductCard
         imgSrc="src/images/t-shirt.jpg"
-        title="White T-Shirt"
+        name="White T-Shirt"
         price={540}
       />
       <ProductCard
         imgSrc="src/images/t-shirt.jpg"
-        title="White T-Shirt"
+        name="White T-Shirt"
         price={540}
       />
       <ProductCard
         imgSrc="src/images/t-shirt.jpg"
-        title="White T-Shirt"
+        name="White T-Shirt"
         price={540}
       />
       <ProductCard
         imgSrc="src/images/t-shirt.jpg"
-        title="White T-Shirt"
+        name="White T-Shirt"
         price={540}
       />
     </div>

@@ -5,7 +5,7 @@ export default function MainNavbar() {
   return (
     <nav className={classes["main-nav"]}>
       <Link to="/">Home</Link>
-      <Link to="cart">Cart</Link>
+      <Link to="/cart">Cart</Link>
     </nav>
   );
 }

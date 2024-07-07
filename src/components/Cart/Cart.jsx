@@ -1,3 +1,7 @@
 export default function Cart() {
-  return <p>Cart</p>;
+  return (
+    <div aria-label="cart page">
+      <p>Cart</p>;
+    </div>
+  );
 }

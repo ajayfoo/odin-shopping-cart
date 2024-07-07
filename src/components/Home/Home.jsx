@@ -1,7 +1,9 @@
+import { useOutletContext } from "react-router-dom";
 import ProductCard from "../ProductCard/ProductCard";
 import classes from "./Home.module.css";
-import PropTypes from "prop-types";
-export default function Home({ products, onAdd }) {
+
+export default function Home() {
+  const { products, onAdd } = useOutletContext();
   return (
     <div aria-label="home page" className={classes.home}>
       {products.map((p) => (
@@ -16,8 +18,3 @@ export default function Home({ products, onAdd }) {
     </div>
   );
 }
-
-Home.propTypes = {
-  products: PropTypes.array.isRequired,
-  onAdd: PropTypes.func.isRequired,
-};

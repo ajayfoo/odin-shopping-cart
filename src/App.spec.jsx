@@ -26,9 +26,7 @@ describe("App", () => {
 
   it("increments shopping cart items count in its bubble", async () => {
     const user = userEvent.setup();
-    const router = createMemoryRouter(getRoutes(products), {
-      initialEntries: ["/cart"],
-    });
+    const router = createMemoryRouter(getRoutes(products));
     render(<RouterProvider router={router} />);
 
     const shoppingCartItemsCountBubble = screen.getByRole("alert", {
@@ -37,7 +35,7 @@ describe("App", () => {
 
     const sampleProduct = products[0];
     const productCard = screen.getByRole("article", {
-      name: sampleProduct + " product card",
+      name: sampleProduct.name + " product card",
     });
     const addToCartBtn = getByRole(productCard, "button", {
       name: "Add To Cart",

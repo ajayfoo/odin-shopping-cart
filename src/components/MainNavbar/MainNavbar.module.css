@@ -15,13 +15,20 @@
 .main-nav a {
   text-decoration: none;
   font-size: var(--medium-font);
+  padding: var(--x-small-gap) var(--small-gap);
 }
-
 .cart > span[role="alert"] {
   background-color: var(--secondary);
   color: var(--on-secondary);
   border-radius: var(--medium-radius);
-  padding: 0 0.5em;
+  padding: 0 var(--x-small-gap);
   margin-inline-start: var(--small-gap);
-  text-align: end;
+}
+.selected {
+  box-shadow: inset 0px 0px 4px 1px var(--shadow);
+  border-radius: var(--medium-radius);
+}
+
+.selected-cart {
+  composes: cart selected;
 }

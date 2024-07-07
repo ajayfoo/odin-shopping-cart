@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Counter from "../Counter/Counter";
 import classes from "./ProductCard.module.css";
 
-const ProductCard = ({ imgSrc, name, price }) => {
+const ProductCard = ({ imgSrc, name, price, onAdd }) => {
   const [count, setCount] = useState(0);
 
   const handleDecrement = () => {
@@ -38,7 +38,9 @@ const ProductCard = ({ imgSrc, name, price }) => {
         <p aria-label="price" className={classes["price"]}>
           {price} INR
         </p>
-        <button type="button">Add To Cart</button>
+        <button type="button" onClick={onAdd}>
+          Add To Cart
+        </button>
       </div>
     </article>
   );
@@ -48,6 +50,7 @@ ProductCard.propTypes = {
   imgSrc: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  onAdd: PropTypes.func.isRequired,
 };
 
 export default ProductCard;

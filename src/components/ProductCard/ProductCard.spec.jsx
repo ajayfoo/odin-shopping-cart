@@ -3,33 +3,15 @@ import { describe, it, expect, vi } from "vitest";
 import ProductCard from "./ProductCard";
 import userEvent from "@testing-library/user-event";
 
-vi.mock("../Counter/Counter", () => {
-  const mockedCounter = ({ count, onDecrement, onIncrement, onEdit }) => (
-    <>
-      <div onClick={onDecrement} data-testid="decr-count">
-        -
-      </div>
-      <input
-        type="text"
-        data-testid="curr-count"
-        value={count}
-        onChange={onEdit}
-      />
-      <div onClick={onIncrement} data-testid="incr-count">
-        +
-      </div>
-    </>
-  );
-  return {
-    default: mockedCounter,
-  };
-});
+vi.mock("../Counter/Counter");
 
 describe("ProductCard", () => {
   it("renders it", async () => {
     const name = "Product name";
     const price = 200;
-    render(<ProductCard name="Product name" imgSrc="" price={200} />);
+    render(
+      <ProductCard name="Product name" imgSrc="" price={200} onAdd={vi.fn()} />
+    );
 
     const imgEle = screen.getByRole("img", { name: name });
     const nameEle = screen.getByRole("paragraph", { name: "name" });
@@ -56,7 +38,9 @@ describe("ProductCard", () => {
 
   it("increments and decrements product count on clicking increment and decrements button respectively", async () => {
     const user = userEvent.setup();
-    render(<ProductCard name="Product name" imgSrc="" price={200} />);
+    render(
+      <ProductCard name="Product name" imgSrc="" price={200} onAdd={vi.fn()} />
+    );
     const countEle = screen.getByTestId("curr-count");
     const incrementBtn = screen.getByTestId("incr-count");
     const decrementBtn = screen.getByTestId("decr-count");
@@ -68,5 +52,29 @@ describe("ProductCard", () => {
 
     await user.click(decrementBtn);
     expect(countEle).toHaveValue("2");
+  });
+  it("sets product count on editing count textbox respectively", async () => {
+    const user = userEvent.setup();
+    render(
+      <ProductCard name="Product name" imgSrc="" price={200} onAdd={vi.fn()} />
+    );
+    const countEle = screen.getByTestId("curr-count");
+
+    const newCount = "5";
+
+    await user.click(countEle);
+    await user.keyboard(newCount);
+    expect(countEle).toHaveValue(newCount);
+  });
+  it("calls onAdd when Add To Cart button is clicked", async () => {
+    const user = userEvent.setup();
+    const onAdd = vi.fn();
+    render(
+      <ProductCard name="Product name" imgSrc="" price={200} onAdd={onAdd} />
+    );
+    const addToCartBtn = screen.getByRole("button", { name: "Add To Cart" });
+
+    await user.click(addToCartBtn);
+    expect(onAdd).toHaveBeenCalledTimes(1);
   });
 });

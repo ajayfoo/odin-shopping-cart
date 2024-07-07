@@ -4,7 +4,11 @@ import { makeid } from "../../utils";
 
 const Counter = ({ count, onDecrement, onIncrement, onEdit }) => {
   return (
-    <div aria-label="counter" aria-live="polite" className={classes.counter}>
+    <div
+      aria-label="product counter"
+      aria-live="polite"
+      className={classes.counter}
+    >
       <button aria-label="decrement" onClick={onDecrement}>
         -
       </button>
@@ -12,7 +16,7 @@ const Counter = ({ count, onDecrement, onIncrement, onEdit }) => {
         id={"counter-count-" + makeid(5)}
         className={classes.count}
         type="text"
-        aria-label={count}
+        aria-label="product count"
         value={count}
         onChange={onEdit}
       />

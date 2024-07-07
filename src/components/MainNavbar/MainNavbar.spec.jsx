@@ -33,4 +33,18 @@ describe("Main navigation bar", () => {
       cartCount.toString()
     );
   });
+  it("shows +9 when cart items count is more than 9", () => {
+    const cartCount = 11;
+    render(
+      <MemoryRouter>
+        <MainNavbar cartCount={cartCount} />
+      </MemoryRouter>
+    );
+
+    const shoppingCartItemsCountBubble = screen.getByRole("alert", {
+      name: "shopping cart items count",
+    });
+
+    expect(shoppingCartItemsCountBubble).toHaveTextContent("+9");
+  });
 });

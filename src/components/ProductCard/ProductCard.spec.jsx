@@ -27,7 +27,7 @@ describe("ProductCard", () => {
     expect(nameEle).toHaveTextContent(name);
 
     expect(countEle).toBeVisible();
-    expect(countEle).toHaveValue("0");
+    expect(countEle).toHaveValue("1");
 
     expect(priceEle).toBeVisible();
     expect(priceEle).toHaveTextContent(price);
@@ -48,10 +48,10 @@ describe("ProductCard", () => {
     await user.click(incrementBtn);
     await user.click(incrementBtn);
     await user.click(incrementBtn);
-    expect(countEle).toHaveValue("3");
+    expect(countEle).toHaveValue("4");
 
     await user.click(decrementBtn);
-    expect(countEle).toHaveValue("2");
+    expect(countEle).toHaveValue("3");
   });
   it("sets product count on editing count textbox respectively", async () => {
     const user = userEvent.setup();
@@ -60,10 +60,11 @@ describe("ProductCard", () => {
     );
     const countEle = screen.getByTestId("curr-count");
 
-    const newCount = "5";
+    const insertKey = "5";
+    const newCount = "1" + insertKey;
 
     await user.click(countEle);
-    await user.keyboard(newCount);
+    await user.keyboard(insertKey);
     expect(countEle).toHaveValue(newCount);
   });
   it("calls onAdd when Add To Cart button is clicked", async () => {

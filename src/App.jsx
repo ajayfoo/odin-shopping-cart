@@ -1,15 +1,8 @@
 import { Outlet } from "react-router-dom";
 import MainNavbar from "./components/MainNavbar/MainNavbar";
+import PropTypes from "prop-types";
 
-function App() {
-  const products = [
-    {
-      name: "White T-Shirt",
-      price: 200,
-      imgSrc: "src/images/t-shirt.jpg",
-      id: 123,
-    },
-  ];
+function App({ products }) {
   const onAdd = () => console.log("on add");
   return (
     <>
@@ -18,5 +11,9 @@ function App() {
     </>
   );
 }
+
+App.propTypes = {
+  products: PropTypes.array.isRequired,
+};
 
 export default App;

@@ -24,7 +24,7 @@ describe("App", () => {
     expect(cartPage).toBeVisible();
   });
 
-  it("increments shopping cart items count in its bubble", async () => {
+  it("increments shopping cart items count in its bubble when Add To Cart is clicked", async () => {
     const user = userEvent.setup();
     const router = createMemoryRouter(getRoutes(products));
     render(<RouterProvider router={router} />);

@@ -6,12 +6,12 @@ export default function MainNavbar({ cartCount }) {
   return (
     <nav className={classes["main-nav"]}>
       <Link to="/">Home</Link>
-      <span className="cart">
-        <Link to="/cart">Cart</Link>
+      <Link aria-label="cart" className={classes.cart} to="/cart">
+        Cart
         <span role="alert" aria-label="shopping cart items count">
           {cartCount}
         </span>
-      </span>
+      </Link>
     </nav>
   );
 }

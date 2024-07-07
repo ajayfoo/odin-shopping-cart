@@ -14,7 +14,7 @@ describe("Main navigation bar", () => {
     screen.getByRole("navigation");
 
     const home = screen.getByRole("link", { name: "Home", value: "home" });
-    const shop = screen.getByRole("link", { name: "Cart", value: "cart" });
+    const shop = screen.getByRole("link", { name: "cart", value: "cart" });
 
     const shoppingCartItemsCountBubble = screen.getByRole("alert", {
       name: "shopping cart items count",

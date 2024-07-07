@@ -4,8 +4,11 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 
 function App({ products }) {
-  const onAdd = () => console.log("on add");
-  const [cartCount] = useState(0);
+  const [cartItems, setCartItems] = useState([]);
+  const cartCount = cartItems.length;
+  const onAdd = () => {
+    setCartItems([...cartItems, {}]);
+  };
   return (
     <>
       <MainNavbar cartCount={cartCount} />

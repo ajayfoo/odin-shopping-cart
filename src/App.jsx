@@ -7,16 +7,30 @@ function App({ products }) {
   const [cartItems, setCartItems] = useState([]);
   const cartCount = cartItems.length;
   const onAdd = (imgSrc, name, price, count, id) => {
-    setCartItems([
-      ...cartItems,
-      {
-        imgSrc,
-        name,
-        price,
-        count,
-        id,
-      },
-    ]);
+    const duplicateIndex = cartItems.findIndex((e) => e.id === id);
+    if (duplicateIndex === -1) {
+      setCartItems([
+        ...cartItems,
+        {
+          imgSrc,
+          name,
+          price,
+          count,
+          id,
+        },
+      ]);
+    } else {
+      const oldCount = cartItems[duplicateIndex].count;
+      const updatedCartItem = {
+        ...cartItems[duplicateIndex],
+        count: oldCount + count,
+      };
+      setCartItems([
+        ...cartItems.slice(0, duplicateIndex),
+        updatedCartItem,
+        ...cartItems.slice(duplicateIndex + 1),
+      ]);
+    }
   };
   const onRemove = (id) => {
     setCartItems(cartItems.filter((c) => c.id !== id));

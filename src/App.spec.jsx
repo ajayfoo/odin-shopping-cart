@@ -153,4 +153,36 @@ describe("App", () => {
         expectedCountInCart + " " + sampleProduct.name + "(s) cart item card",
     });
   });
+  describe("Remove cart item", () => {
+    it("removes cart item when count is zero", async () => {
+      const user = userEvent.setup();
+      const router = createMemoryRouter(getRoutes(products));
+      render(<RouterProvider router={router} />);
+
+      const cartLink = screen.getByRole("link", { name: "cart" });
+
+      const sampleProduct = products[0];
+      const productCard = screen.getByRole("article", {
+        name: sampleProduct.name + " product card",
+      });
+      const addToCartBtn = getByRole(productCard, "button", {
+        name: "Add To Cart",
+      });
+
+      await user.click(addToCartBtn);
+
+      await user.click(cartLink);
+
+      const expectedCountInCart = 1;
+
+      const cartItem = screen.getByRole("article", {
+        name:
+          expectedCountInCart + " " + sampleProduct.name + "(s) cart item card",
+      });
+      const decrementBtn = getByRole(cartItem, "button", { name: "decrement" });
+
+      await user.click(decrementBtn);
+      expect(cartItem).not.toBeInTheDocument();
+    });
+  });
 });

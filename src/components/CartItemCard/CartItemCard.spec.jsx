@@ -111,4 +111,24 @@ describe("CartItemCard", () => {
     await user.click(removeBtn);
     expect(onRemove).toHaveBeenCalledTimes(1);
   });
+  it("calls onRemove when count is less than 2 and decrement is clicked", async () => {
+    const user = userEvent.setup();
+    const { name, imgSrc, id, price } = cartItems[0];
+    const onRemove = vi.fn();
+    render(
+      <CartItemCard
+        name={name}
+        imgSrc={imgSrc}
+        price={price}
+        initialCount={1}
+        id={id}
+        onRemove={onRemove}
+      />
+    );
+
+    const decrementBtn = screen.getByTestId("decr-count");
+
+    await user.click(decrementBtn);
+    expect(onRemove).toHaveBeenCalledTimes(1);
+  });
 });

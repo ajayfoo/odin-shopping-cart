@@ -4,11 +4,15 @@ import Counter from "../Counter/Counter";
 import classes from "./CartItemCard.module.css";
 
 const CartItemCard = ({ imgSrc, name, price, id, initialCount, onRemove }) => {
-  const MIN_COUNT = 0;
+  const MIN_COUNT = 1;
   const [count, setCount] = useState(initialCount);
 
   const handleDecrement = () => {
-    setCount(count <= 0 ? 0 : count - 1);
+    if (count <= 1) {
+      handleRemove();
+      return;
+    }
+    setCount(count - 1);
   };
   const handleIncrement = () => {
     setCount(count + 1);
@@ -21,7 +25,7 @@ const CartItemCard = ({ imgSrc, name, price, id, initialCount, onRemove }) => {
   const handleEdit = ({ target: { value } }) => {
     const num = parseInt(value);
     if (isNaN(num)) {
-      setCount(MIN_COUNT + 1);
+      setCount(MIN_COUNT);
     } else {
       if (num <= 0) {
         handleRemove();

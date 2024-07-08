@@ -2,17 +2,10 @@ import { describe, expect, it, vi } from "vitest";
 import { getByRole, render, screen } from "@testing-library/react";
 import Home from "./Home";
 import userEvent from "@testing-library/user-event";
+import { products } from "../../test/sampleData";
 
 vi.mock("../ProductCard/ProductCard");
 
-const products = [
-  {
-    name: "White T-Shirt",
-    price: 200,
-    imgSrc: "src/images/t-shirt.png",
-    id: 123,
-  },
-];
 const onAdd = vi.fn();
 vi.mock("react-router-dom", () => {
   return {

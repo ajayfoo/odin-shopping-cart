@@ -12,10 +12,10 @@ describe("Counter", () => {
       <Counter count={count} onIncrement={fn} onDecrement={fn} onEdit={fn} />
     );
 
-    screen.getByRole("generic", { name: "product counter" });
+    screen.getByRole("generic", { name: "counter" });
 
     const input = screen.getByRole("textbox", {
-      name: "product count",
+      name: "count",
     });
     const incrementBtn = screen.getByRole("button", { name: "increment" });
     const decrementBtn = screen.getByRole("button", { name: "decrement" });
@@ -70,7 +70,7 @@ describe("Counter", () => {
     );
 
     const newCount = 8;
-    const input = screen.getByRole("textbox", { name: "product count" });
+    const input = screen.getByRole("textbox", { name: "count" });
     await user.click(input);
     await user.keyboard(newCount.toString());
     expect(onEdit).toBeCalled(1);

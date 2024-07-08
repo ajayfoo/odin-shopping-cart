@@ -11,6 +11,7 @@ const Counter = ({ count, onDecrement, onIncrement, onEdit }) => {
         data-testid="curr-count"
         value={count}
         onChange={onEdit}
+        aria-label="count"
       />
       <div onClick={onIncrement} data-testid="incr-count">
         +

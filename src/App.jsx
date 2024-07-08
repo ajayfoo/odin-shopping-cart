@@ -12,7 +12,7 @@ function App({ products }) {
   return (
     <>
       <MainNavbar cartCount={cartCount} />
-      <Outlet context={{ products, onAdd }} />
+      <Outlet context={{ products, onAdd, cartItems }} />
     </>
   );
 }

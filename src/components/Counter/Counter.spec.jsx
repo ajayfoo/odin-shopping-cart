@@ -14,7 +14,7 @@ describe("Counter", () => {
 
     screen.getByRole("generic", { name: "counter" });
 
-    const input = screen.getByRole("textbox", {
+    const input = screen.getByRole("spinbutton", {
       name: "count",
     });
     const incrementBtn = screen.getByRole("button", { name: "increment" });
@@ -24,7 +24,7 @@ describe("Counter", () => {
     expect(incrementBtn).toHaveTextContent("+");
 
     expect(input).toBeVisible();
-    expect(input).toHaveValue(count.toString());
+    expect(input).toHaveValue(count);
 
     expect(decrementBtn).toBeVisible();
     expect(decrementBtn).toHaveTextContent("-");
@@ -70,7 +70,7 @@ describe("Counter", () => {
     );
 
     const newCount = 8;
-    const input = screen.getByRole("textbox", { name: "count" });
+    const input = screen.getByRole("spinbutton", { name: "count" });
     await user.click(input);
     await user.keyboard(newCount.toString());
     expect(onEdit).toBeCalled(1);

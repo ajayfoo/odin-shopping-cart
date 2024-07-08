@@ -2,19 +2,20 @@ import { render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import ProductCard from "./ProductCard";
 import userEvent from "@testing-library/user-event";
+import { products } from "../../test/sampleData";
 
 vi.mock("../Counter/Counter");
 
 describe("ProductCard", () => {
   it("renders it", async () => {
-    const name = "Product name";
-    const price = 200;
+    const DEFAULT_COUNT = 1;
+    const { name, price, imgSrc, id } = products[0];
     render(
       <ProductCard
-        name="Product name"
-        imgSrc=""
-        price={200}
-        id={123}
+        name={name}
+        imgSrc={imgSrc}
+        price={price}
+        id={id}
         onAdd={vi.fn()}
       />
     );
@@ -33,7 +34,7 @@ describe("ProductCard", () => {
     expect(nameEle).toHaveTextContent(name);
 
     expect(countEle).toBeVisible();
-    expect(countEle).toHaveValue("1");
+    expect(countEle).toHaveValue(DEFAULT_COUNT);
 
     expect(priceEle).toBeVisible();
     expect(priceEle).toHaveTextContent(price);
@@ -44,12 +45,14 @@ describe("ProductCard", () => {
 
   it("increments and decrements product count on clicking increment and decrements button respectively", async () => {
     const user = userEvent.setup();
+    const DEFAULT_COUNT = 1;
+    const { name, price, imgSrc, id } = products[0];
     render(
       <ProductCard
-        name="Product name"
-        imgSrc=""
-        price={200}
-        id={123}
+        name={name}
+        imgSrc={imgSrc}
+        price={price}
+        id={id}
         onAdd={vi.fn()}
       />
     );
@@ -60,29 +63,36 @@ describe("ProductCard", () => {
     await user.click(incrementBtn);
     await user.click(incrementBtn);
     await user.click(incrementBtn);
-    expect(countEle).toHaveValue("4");
+    let numberOfTimesClicked = 3;
+    let newCount = DEFAULT_COUNT + numberOfTimesClicked;
+
+    expect(countEle).toHaveValue(DEFAULT_COUNT + numberOfTimesClicked);
 
     await user.click(decrementBtn);
-    expect(countEle).toHaveValue("3");
+    numberOfTimesClicked = 1;
+
+    expect(countEle).toHaveValue(newCount - numberOfTimesClicked);
   });
   it("sets product count on editing count textbox respectively", async () => {
     const user = userEvent.setup();
+    const DEFAULT_COUNT = 1;
+    const { name, price, imgSrc, id } = products[0];
     render(
       <ProductCard
-        name="Product name"
-        imgSrc=""
-        price={200}
-        id={123}
+        name={name}
+        imgSrc={imgSrc}
+        price={price}
+        id={id}
         onAdd={vi.fn()}
       />
     );
     const countEle = screen.getByTestId("curr-count");
 
-    const insertKey = "5";
-    const newCount = "1" + insertKey;
+    const insertKey = 5;
+    const newCount = parseInt(DEFAULT_COUNT + "" + insertKey);
 
     await user.click(countEle);
-    await user.keyboard(insertKey);
+    await user.keyboard(insertKey.toString());
     expect(countEle).toHaveValue(newCount);
   });
   it("calls onAdd when Add To Cart button is clicked", async () => {

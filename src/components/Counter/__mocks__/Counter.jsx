@@ -7,7 +7,9 @@ const Counter = ({ count, onDecrement, onIncrement, onEdit }) => {
         -
       </div>
       <input
-        type="text"
+        type="number"
+        step={1}
+        min={0}
         data-testid="curr-count"
         value={count}
         onChange={onEdit}

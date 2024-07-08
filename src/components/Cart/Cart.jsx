@@ -21,7 +21,21 @@ export default function Cart() {
       </div>
     );
   } else {
-    content = <p className={classes["no-items"]}>No items in the cart</p>;
+    content = (
+      <div className={classes["no-items"]}>
+        <img
+          className={classes["light-icon"]}
+          src="src/images/caterpillar-light.svg"
+          alt="caterpillar to indicate cart is empty"
+        />
+        <img
+          className={classes["dark-icon"]}
+          src="src/images/caterpillar-dark.svg"
+          alt="caterpillar to indicate cart is empty"
+        />
+        <p>No items in the cart</p>
+      </div>
+    );
   }
   return <div aria-label="cart page">{content}</div>;
 }

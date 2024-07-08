@@ -97,4 +97,32 @@ describe("App", () => {
 
     expect(cartItem).not.toBeInTheDocument();
   });
+
+  it("sets count to MIN_COUNT when Add To Cart is clicked", async () => {
+    const user = userEvent.setup();
+    const MIN_COUNT = 1;
+    const router = createMemoryRouter(getRoutes(products));
+    render(<RouterProvider router={router} />);
+
+    const sampleProduct = products[0];
+    const productCard = screen.getByRole("article", {
+      name: sampleProduct.name + " product card",
+    });
+    const incrementBtn = getByRole(productCard, "button", {
+      name: "increment",
+    });
+    const count = getByRole(productCard, "spinbutton", { name: "count" });
+
+    await user.click(incrementBtn);
+    await user.click(incrementBtn);
+    await user.click(incrementBtn);
+    const numberOfTimesClicked = 3;
+
+    expect(count).toHaveValue(MIN_COUNT + numberOfTimesClicked);
+    const addToCartBtn = getByRole(productCard, "button", {
+      name: "Add To Cart",
+    });
+    await user.click(addToCartBtn);
+    expect(count).toHaveValue(MIN_COUNT);
+  });
 });

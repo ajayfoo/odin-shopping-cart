@@ -25,6 +25,7 @@ const ProductCard = ({ imgSrc, name, price, onAdd, id }) => {
   const handleAddToCart = () => {
     if (count <= 0) return;
     onAdd(imgSrc, name, price, count, id);
+    setCount(MIN_COUNT);
   };
 
   return (

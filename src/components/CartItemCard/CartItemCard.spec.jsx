@@ -1,29 +1,114 @@
-import { getByRole, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
-import { cartItems } from "../../test/sampleData";
+import { render, screen } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
+import userEvent from "@testing-library/user-event";
 import CartItemCard from "./CartItemCard";
+import { cartItems } from "../../test/sampleData";
 
-vi.mock("../Counter/Counter.jsx");
+vi.mock("../Counter/Counter");
+
 describe("CartItemCard", () => {
-  it("renders it", () => {
-    const cartItem = cartItems[0];
-    render(<CartItemCard {...cartItem} onRemove={vi.fn()} />);
+  it("renders it", async () => {
+    const { name, count, imgSrc, id, price } = cartItems[0];
+    render(
+      <CartItemCard
+        name={name}
+        imgSrc={imgSrc}
+        price={price}
+        initialCount={count}
+        id={id}
+        onRemove={vi.fn()}
+      />
+    );
 
-    const itemCard = screen.getByRole("article", {
-      name: cartItem.count + " " + cartItem.name + "(s) cart item card",
+    screen.getByRole("article", {
+      name: count + " " + name + "(s) cart item card",
     });
-    const img = getByRole(itemCard, "img", { name: cartItem.name });
-    const name = getByRole(itemCard, "paragraph", { name: cartItem.name });
-    const price = getByRole(itemCard, "paragraph", {
-      name: cartItem.count + " " + cartItem.name + "(s) price",
-    });
-    const count = getByRole(itemCard, "textbox", { name: "count" });
-    const removeBtn = getByRole(itemCard, "button", { name: "Remove" });
 
-    [img, name, price, count, removeBtn].forEach((e) => {
-      expect(e).toBeVisible();
-    });
-    expect(price).toHaveTextContent(cartItem.price + " INR");
-    expect(count).toHaveValue(cartItem.count.toString());
+    const imgEle = screen.getByRole("img", { name: name });
+    const nameEle = screen.getByRole("paragraph", { name: "name" });
+    const countEle = screen.getByTestId("curr-count");
+    const priceEle = screen.getByRole("paragraph", { name: "price" });
+    const removeBtn = screen.getByRole("button", { name: "Remove" });
+
+    expect(imgEle).toBeVisible();
+
+    expect(nameEle).toBeVisible();
+    expect(nameEle).toHaveTextContent(name);
+
+    expect(countEle).toBeVisible();
+    expect(countEle).toHaveValue(count.toString());
+
+    expect(priceEle).toBeVisible();
+    expect(priceEle).toHaveTextContent(price);
+
+    expect(removeBtn).toBeVisible();
+    expect(removeBtn).toHaveTextContent("Remove");
+  });
+
+  it("increments and decrements product count on clicking increment and decrements button respectively", async () => {
+    const user = userEvent.setup();
+    const { name, count, imgSrc, id, price } = cartItems[0];
+    render(
+      <CartItemCard
+        name={name}
+        imgSrc={imgSrc}
+        price={price}
+        initialCount={count}
+        id={id}
+        onRemove={vi.fn()}
+      />
+    );
+    const countEle = screen.getByTestId("curr-count");
+    const incrementBtn = screen.getByTestId("incr-count");
+    const decrementBtn = screen.getByTestId("decr-count");
+
+    await user.click(incrementBtn);
+    await user.click(incrementBtn);
+    await user.click(incrementBtn);
+    expect(countEle).toHaveValue((count + 3).toString());
+
+    await user.click(decrementBtn);
+    expect(countEle).toHaveValue((count + 2).toString());
+  });
+  it("sets product count on editing count textbox respectively", async () => {
+    const user = userEvent.setup();
+    const { name, count, imgSrc, id, price } = cartItems[0];
+    render(
+      <CartItemCard
+        name={name}
+        imgSrc={imgSrc}
+        price={price}
+        initialCount={count}
+        id={id}
+        onRemove={vi.fn()}
+      />
+    );
+    const countEle = screen.getByTestId("curr-count");
+
+    const insertKey = "5";
+    const newCount = count + insertKey;
+
+    await user.click(countEle);
+    await user.keyboard(insertKey);
+    expect(countEle).toHaveValue(newCount);
+  });
+  it("calls onRemove when Remove button is clicked", async () => {
+    const user = userEvent.setup();
+    const { name, count, imgSrc, id, price } = cartItems[0];
+    const onRemove = vi.fn();
+    render(
+      <CartItemCard
+        name={name}
+        imgSrc={imgSrc}
+        price={price}
+        initialCount={count}
+        id={id}
+        onRemove={onRemove}
+      />
+    );
+    const removeBtn = screen.getByRole("button", { name: "Remove" });
+
+    await user.click(removeBtn);
+    expect(onRemove).toHaveBeenCalledTimes(1);
   });
 });

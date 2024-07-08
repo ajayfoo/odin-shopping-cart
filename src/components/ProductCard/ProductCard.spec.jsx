@@ -10,7 +10,13 @@ describe("ProductCard", () => {
     const name = "Product name";
     const price = 200;
     render(
-      <ProductCard name="Product name" imgSrc="" price={200} onAdd={vi.fn()} />
+      <ProductCard
+        name="Product name"
+        imgSrc=""
+        price={200}
+        id={123}
+        onAdd={vi.fn()}
+      />
     );
 
     const imgEle = screen.getByRole("img", { name: name });
@@ -39,7 +45,13 @@ describe("ProductCard", () => {
   it("increments and decrements product count on clicking increment and decrements button respectively", async () => {
     const user = userEvent.setup();
     render(
-      <ProductCard name="Product name" imgSrc="" price={200} onAdd={vi.fn()} />
+      <ProductCard
+        name="Product name"
+        imgSrc=""
+        price={200}
+        id={123}
+        onAdd={vi.fn()}
+      />
     );
     const countEle = screen.getByTestId("curr-count");
     const incrementBtn = screen.getByTestId("incr-count");
@@ -56,7 +68,13 @@ describe("ProductCard", () => {
   it("sets product count on editing count textbox respectively", async () => {
     const user = userEvent.setup();
     render(
-      <ProductCard name="Product name" imgSrc="" price={200} onAdd={vi.fn()} />
+      <ProductCard
+        name="Product name"
+        imgSrc=""
+        price={200}
+        id={123}
+        onAdd={vi.fn()}
+      />
     );
     const countEle = screen.getByTestId("curr-count");
 
@@ -71,7 +89,13 @@ describe("ProductCard", () => {
     const user = userEvent.setup();
     const onAdd = vi.fn();
     render(
-      <ProductCard name="Product name" imgSrc="" price={200} onAdd={onAdd} />
+      <ProductCard
+        name="Product name"
+        imgSrc=""
+        price={200}
+        id={123}
+        onAdd={onAdd}
+      />
     );
     const addToCartBtn = screen.getByRole("button", { name: "Add To Cart" });
 

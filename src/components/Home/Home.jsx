@@ -12,6 +12,7 @@ export default function Home() {
           name={p.name}
           price={p.price}
           onAdd={onAdd}
+          id={p.id}
           key={p.id}
         />
       ))}

@@ -5,7 +5,7 @@ import userEvent from "@testing-library/user-event";
 import getRoutes from "./routes";
 import { products } from "./test/sampleData";
 
-describe.skip("App", () => {
+describe("App", () => {
   it("renders home page", async () => {
     const router = createMemoryRouter(getRoutes(products));
     render(<RouterProvider router={router} />);
@@ -13,7 +13,7 @@ describe.skip("App", () => {
     expect(homeEle).toBeVisible();
   });
 
-  it("renders cart page when on /cart clicked", () => {
+  it("renders cart page when on /cart", () => {
     const router = createMemoryRouter(getRoutes(products), {
       initialEntries: ["/cart"],
     });
@@ -43,5 +43,28 @@ describe.skip("App", () => {
 
     await user.click(addToCartBtn);
     expect(shoppingCartItemsCountBubble).toHaveTextContent("1");
+  });
+
+  it("adds product(s) to cart when Add To Cart is clicked", async () => {
+    const user = userEvent.setup();
+    const router = createMemoryRouter(getRoutes(products));
+    render(<RouterProvider router={router} />);
+
+    const cartLink = screen.getByRole("link", { name: "cart" });
+
+    const sampleProduct = products[0];
+    const productCard = screen.getByRole("article", {
+      name: sampleProduct.name + " product card",
+    });
+    const addToCartBtn = getByRole(productCard, "button", {
+      name: "Add To Cart",
+    });
+
+    await user.click(addToCartBtn);
+    await user.click(cartLink);
+
+    screen.getByRole("article", {
+      name: "1 " + sampleProduct.name + "(s) cart item card",
+    });
   });
 });

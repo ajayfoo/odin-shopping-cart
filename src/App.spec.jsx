@@ -67,4 +67,34 @@ describe("App", () => {
       name: "1 " + sampleProduct.name + "(s) cart item card",
     });
   });
+  it("adds product(s) to cart and removes corresponding cart item when Remove button is clicked", async () => {
+    const user = userEvent.setup();
+    const router = createMemoryRouter(getRoutes(products));
+    render(<RouterProvider router={router} />);
+
+    const cartLink = screen.getByRole("link", { name: "cart" });
+
+    const sampleProduct = products[0];
+    const productCard = screen.getByRole("article", {
+      name: sampleProduct.name + " product card",
+    });
+    const addToCartBtn = getByRole(productCard, "button", {
+      name: "Add To Cart",
+    });
+
+    await user.click(addToCartBtn);
+    await user.click(cartLink);
+
+    const cartItem = screen.getByRole("article", {
+      name: "1 " + sampleProduct.name + "(s) cart item card",
+    });
+
+    const removeBtn = getByRole(cartItem, "button", {
+      name: "Remove",
+    });
+
+    await user.click(removeBtn);
+
+    expect(cartItem).not.toBeInTheDocument();
+  });
 });

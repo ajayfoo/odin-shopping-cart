@@ -2,7 +2,7 @@ import { useOutletContext } from "react-router-dom";
 import classes from "./Cart.module.css";
 import CartItemCard from "../CartItemCard/CartItemCard";
 export default function Cart() {
-  const { cartItems } = useOutletContext();
+  const { cartItems, onRemove } = useOutletContext();
   let content = null;
   if (cartItems.length > 0) {
     content = (
@@ -13,7 +13,7 @@ export default function Cart() {
             price={c.price}
             imgSrc={c.imgSrc}
             initialCount={c.count}
-            onRemove={() => {}}
+            onRemove={() => onRemove(c.id)}
             id={c.id}
             key={c.id}
           />

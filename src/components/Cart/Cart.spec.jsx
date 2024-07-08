@@ -3,39 +3,38 @@ import { describe, expect, it, vi } from "vitest";
 import Cart from "./Cart";
 import { cartItems } from "../../test/sampleData";
 
+const { useOutletContext } = vi.hoisted(() => {
+  return {
+    useOutletContext: vi.fn(),
+  };
+});
+
 vi.mock("react-router-dom", () => {
   return {
-    useOutletContext: () => ({
-      cartItems,
-    }),
+    useOutletContext: useOutletContext,
   };
 });
 
 describe("Cart", () => {
   it("renders it zero cart item", () => {
+    useOutletContext.mockReturnValue({ cartItems: [] });
     render(<Cart />);
-    const itemsHeading = screen.getByRole("heading", {
-      level: 2,
-      name: "Items",
-    });
+    const noItemsAccName = "No items in the cart";
+    const noItems = screen.getByRole("paragraph", noItemsAccName);
 
-    expect(itemsHeading).toBeVisible();
-    expect(itemsHeading).toHaveTextContent("Items");
+    expect(noItems).toBeVisible();
+    expect(noItems).toHaveTextContent(noItemsAccName);
   });
 
   it("renders some cart items", () => {
+    useOutletContext.mockReturnValue({ cartItems });
     render(<Cart />);
     const cartItem = cartItems[0];
-    const itemsHeading = screen.getByRole("heading", {
-      level: 2,
-      name: "Items",
-    });
 
     const itemCard = screen.getByRole("article", {
       name: cartItem.count + " " + cartItem.name + "(s) cart item card",
     });
 
-    expect(itemsHeading).toBeVisible();
     expect(itemCard).toBeVisible();
   });
 });

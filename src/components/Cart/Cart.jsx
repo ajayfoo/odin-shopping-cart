@@ -3,9 +3,9 @@ import classes from "./Cart.module.css";
 import CartItemCard from "../CartItemCard/CartItemCard";
 export default function Cart() {
   const { cartItems } = useOutletContext();
-  return (
-    <div aria-label="cart page">
-      <h2>Items</h2>
+  let content = null;
+  if (cartItems.length > 0) {
+    content = (
       <div className={classes.items}>
         {cartItems.map((c) => (
           <CartItemCard
@@ -19,6 +19,9 @@ export default function Cart() {
           />
         ))}
       </div>
-    </div>
-  );
+    );
+  } else {
+    content = <p className={classes["no-items"]}>No items in the cart</p>;
+  }
+  return <div aria-label="cart page">{content}</div>;
 }

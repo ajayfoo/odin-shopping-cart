@@ -13,11 +13,16 @@
   object-fit: cover;
 }
 
+.name {
+  text-align: center;
+}
+
 .controls {
   display: inline-grid;
   gap: var(--small-gap);
   grid-template-columns: 1fr 1fr;
   place-items: center;
+  flex-grow: 1;
   padding: var(--small-gap);
   padding-block-start: 0;
 }

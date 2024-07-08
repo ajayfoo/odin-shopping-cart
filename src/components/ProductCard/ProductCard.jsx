@@ -32,7 +32,9 @@ const ProductCard = ({ imgSrc, name, price, onAdd, id }) => {
     >
       <img className={classes["image"]} src={imgSrc} alt={name} />
       <div className={classes["controls"]}>
-        <p aria-label={"name"}>{name}</p>
+        <p className={classes.name} aria-label={"name"}>
+          {name}
+        </p>
         <Counter
           count={count}
           onDecrement={handleDecrement}

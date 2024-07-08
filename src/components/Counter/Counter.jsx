@@ -11,7 +11,9 @@ const Counter = ({ count, onDecrement, onIncrement, onEdit }) => {
       <input
         id={"counter-count-" + makeid(5)}
         className={classes.count}
-        type="text"
+        type="number"
+        step={1}
+        min={0}
         aria-label="count"
         value={count}
         onChange={onEdit}

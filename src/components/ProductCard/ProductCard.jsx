@@ -4,10 +4,11 @@ import Counter from "../Counter/Counter";
 import classes from "./ProductCard.module.css";
 
 const ProductCard = ({ imgSrc, name, price, onAdd, id }) => {
-  const [count, setCount] = useState(1);
+  const MIN_COUNT = 1;
+  const [count, setCount] = useState(MIN_COUNT);
 
   const handleDecrement = () => {
-    setCount(count <= 1 ? 1 : count - 1);
+    setCount(count <= 1 ? MIN_COUNT : count - 1);
   };
   const handleIncrement = () => {
     setCount(count + 1);
@@ -15,13 +16,14 @@ const ProductCard = ({ imgSrc, name, price, onAdd, id }) => {
 
   const handleEdit = ({ target: { value } }) => {
     if (value === "" || isNaN(value)) {
-      setCount(1);
+      setCount(MIN_COUNT);
     } else {
       setCount(parseInt(value));
     }
   };
 
   const handleAddToCart = () => {
+    if (count <= 0) return;
     onAdd(imgSrc, name, price, count, id);
   };
 

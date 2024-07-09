@@ -23,4 +23,15 @@ const cartItems = [
   },
 ];
 
-export { products, cartItems };
+const totalCartItemsPrice = cartItems.reduce(
+  (acc, curr) => (acc += curr.count * curr.price),
+  0
+);
+
+const summaries = [
+  {
+    total: 528,
+  },
+];
+
+export { products, cartItems, summaries, totalCartItemsPrice };

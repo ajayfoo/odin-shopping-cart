@@ -54,4 +54,9 @@ describe("Cart", () => {
     await user.click(removeBtn);
     expect(onRemove).toBeCalledTimes(1);
   });
+  it("renders Summay when cart is not empty", () => {
+    useOutletContext.mockReturnValue({ cartItems });
+    render(<Cart />);
+    screen.getByRole("generic", { name: "summary of cart items and checkout" });
+  });
 });

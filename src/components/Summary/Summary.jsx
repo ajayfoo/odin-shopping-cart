@@ -7,9 +7,9 @@ const Summary = ({ cartItems }) => {
   );
 
   return (
-    <div>
+    <div aria-label="summary of cart items and checkout">
       <h2>Summary</h2>
-      <div className="total">
+      <div>
         <p>Total</p>
         <p aria-label="total price">{totalCartItemsPrice}</p>
       </div>

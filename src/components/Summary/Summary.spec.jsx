@@ -5,6 +5,7 @@ import Summary from "./Summary";
 describe("Summary", () => {
   it("renders", () => {
     render(<Summary cartItems={cartItems} />);
+    screen.getByRole("generic", { name: "summary of cart items and checkout" });
     const heading = screen.getByRole("heading", { name: "Summary", level: 2 });
     const totalPara = screen.getByText("Total");
     const total = screen.getByRole("paragraph", { name: "total price" });

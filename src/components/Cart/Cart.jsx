@@ -7,7 +7,7 @@ export default function Cart() {
   let content = null;
   if (cartItems.length > 0) {
     content = (
-      <>
+      <div className={classes["cart-items"]} aria-label="cart page">
         <div className={classes.items}>
           {cartItems.map((c) => (
             <CartItemCard
@@ -22,11 +22,11 @@ export default function Cart() {
           ))}
         </div>
         <Summary cartItems={cartItems} />
-      </>
+      </div>
     );
   } else {
     content = (
-      <div className={classes["no-items"]}>
+      <div className={classes["cart-no-items"]} aria-label="cart page">
         <img
           className={classes["light-icon"]}
           src="src/images/caterpillar-light.svg"
@@ -41,5 +41,5 @@ export default function Cart() {
       </div>
     );
   }
-  return <div aria-label="cart page">{content}</div>;
+  return content;
 }

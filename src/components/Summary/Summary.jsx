@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import classes from "./Summary.module.css";
 
 const Summary = ({ cartItems }) => {
   const totalCartItemsPrice = cartItems.reduce(
@@ -7,9 +8,9 @@ const Summary = ({ cartItems }) => {
   );
 
   return (
-    <div aria-label="summary of cart items and checkout">
+    <div className={classes.summary} aria-label="summary of cart items and checkout">
       <h2>Summary</h2>
-      <div>
+      <div className={classes.total}>
         <p>Total</p>
         <p aria-label="total price">{totalCartItemsPrice}</p>
       </div>

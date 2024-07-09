@@ -1,4 +1,27 @@
+.summary {
+  color: var(--on-surface);
+}
+.summary > h2 {
+  margin-block-end: var(--small-gap);
+}
 .total {
   display: flex;
   justify-content: space-between;
+  font-size: var(--normal-font);
+  margin-block-end: var(--small-gap);
+  background-color: var(--surface-variant);
+  color: var(--on-surface-variant);
+  padding: var(--small-gap);
+  border-radius: var(--small-radius);
+}
+
+.summary > button {
+  display: block;
+  margin: 0 auto;
+  font-size: var(--normal-font);
+  padding: calc(var(--x-small-gap) * 1.8) var(--medium-gap) var(--x-small-gap);
+  background-color: var(--primary);
+  color: var(--on-primary);
+  border: none;
+  border-radius: var(--medium-radius);
 }

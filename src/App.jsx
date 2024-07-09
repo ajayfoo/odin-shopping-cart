@@ -1,11 +1,33 @@
 import { Outlet } from "react-router-dom";
 import MainNavbar from "./components/MainNavbar/MainNavbar";
-import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-function App({ products }) {
+function App() {
+  const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const cartCount = cartItems.reduce((acc, curr) => (acc += curr.count), 0);
+
+  useEffect(() => {
+    let ignore = false;
+    if (ignore) return;
+    const fetchAndSetProducts = async () => {
+      const allProducts = await fetch("https://fakestoreapi.com/products").then(
+        (res) => res.json()
+      );
+      const normalizedProducts = allProducts.map((p) => ({
+        id: p.id,
+        name: p.title,
+        imgSrc: p.image,
+        price: parseInt(p.price),
+      }));
+      setProducts(normalizedProducts);
+    };
+    fetchAndSetProducts();
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
   const onAdd = (imgSrc, name, price, count, id) => {
     const duplicateIndex = cartItems.findIndex((e) => e.id === id);
     if (duplicateIndex === -1) {
@@ -59,9 +81,5 @@ function App({ products }) {
     </>
   );
 }
-
-App.propTypes = {
-  products: PropTypes.array.isRequired,
-};
 
 export default App;

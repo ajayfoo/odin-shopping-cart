@@ -1,23 +1,39 @@
-import { getByRole, render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { act, getByRole, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import getRoutes from "./routes";
 import { products } from "./test/sampleData";
 
-describe("App", () => {
+const responseProducts = products.map((p) => ({
+  ...p,
+  title: p.name,
+  image: p.imgSrc,
+}));
+const fetchMock = vi.fn(() => {
+  return new Promise((resolve) => {
+    resolve({ json: () => responseProducts });
+  });
+});
+vi.stubGlobal("fetch", fetchMock);
+
+describe("App", async () => {
   it("renders home page", async () => {
-    const router = createMemoryRouter(getRoutes(products));
-    render(<RouterProvider router={router} />);
+    const router = createMemoryRouter(getRoutes());
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
     const homeEle = screen.getByRole("generic", { name: "home page" });
     expect(homeEle).toBeVisible();
   });
 
-  it("renders cart page when on /cart", () => {
-    const router = createMemoryRouter(getRoutes(products), {
+  it("renders cart page when on /cart", async () => {
+    const router = createMemoryRouter(getRoutes(), {
       initialEntries: ["/cart"],
     });
-    render(<RouterProvider router={router} />);
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
 
     const cartPage = screen.getByRole("generic", { name: "cart page" });
 
@@ -26,9 +42,13 @@ describe("App", () => {
 
   it("increments shopping cart items count in its bubble when Add To Cart is clicked", async () => {
     const user = userEvent.setup();
-    const router = createMemoryRouter(getRoutes(products));
-    render(<RouterProvider router={router} />);
+    const router = createMemoryRouter(getRoutes());
 
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
+
+    screen.debug();
     const shoppingCartItemsCountBubble = screen.getByRole("alert", {
       name: "shopping cart items count",
     });
@@ -53,7 +73,9 @@ describe("App", () => {
   it("adds product(s) to cart when Add To Cart is clicked", async () => {
     const user = userEvent.setup();
     const router = createMemoryRouter(getRoutes(products));
-    render(<RouterProvider router={router} />);
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
 
     const cartLink = screen.getByRole("link", { name: "cart" });
 
@@ -75,7 +97,9 @@ describe("App", () => {
   it("adds product(s) to cart and removes corresponding cart item when Remove button is clicked", async () => {
     const user = userEvent.setup();
     const router = createMemoryRouter(getRoutes(products));
-    render(<RouterProvider router={router} />);
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
 
     const cartLink = screen.getByRole("link", { name: "cart" });
 
@@ -107,7 +131,9 @@ describe("App", () => {
     const user = userEvent.setup();
     const MIN_COUNT = 1;
     const router = createMemoryRouter(getRoutes(products));
-    render(<RouterProvider router={router} />);
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
 
     const sampleProduct = products[0];
     const productCard = screen.getByRole("article", {
@@ -134,7 +160,9 @@ describe("App", () => {
   it("adds products to the same cart item if the same product exits in the cart", async () => {
     const user = userEvent.setup();
     const router = createMemoryRouter(getRoutes(products));
-    render(<RouterProvider router={router} />);
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
 
     const cartLink = screen.getByRole("link", { name: "cart" });
 
@@ -162,7 +190,9 @@ describe("App", () => {
     it("removes cart item when count is zero", async () => {
       const user = userEvent.setup();
       const router = createMemoryRouter(getRoutes(products));
-      render(<RouterProvider router={router} />);
+      await act(async () => {
+        render(<RouterProvider router={router} />);
+      });
 
       const cartLink = screen.getByRole("link", { name: "cart" });
 
@@ -193,7 +223,9 @@ describe("App", () => {
   it("clears cart when checkout is clicked", async () => {
     const user = userEvent.setup();
     const router = createMemoryRouter(getRoutes(products));
-    render(<RouterProvider router={router} />);
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
 
     const cartLink = screen.getByRole("link", { name: "cart" });
 
@@ -219,7 +251,9 @@ describe("App", () => {
   it("increments cart count of bubble when cart item card's increment button is clicked", async () => {
     const user = userEvent.setup();
     const router = createMemoryRouter(getRoutes(products));
-    render(<RouterProvider router={router} />);
+    await act(async () => {
+      render(<RouterProvider router={router} />);
+    });
 
     const cartLink = screen.getByRole("link", { name: "cart" });
     const shoppingCartItemsCountBubble = screen.getByRole("alert", {

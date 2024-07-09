@@ -3,11 +3,11 @@ import Home from "./components/Home/Home";
 import ErrorPage from "./ErrorPage/ErrorPage";
 import Cart from "./components/Cart/Cart";
 
-const getRoutes = (products) => {
+const getRoutes = () => {
   return [
     {
       path: "/",
-      element: <App products={products} />,
+      element: <App />,
       errorElement: <ErrorPage />,
       children: [
         { path: "/", element: <Home /> },

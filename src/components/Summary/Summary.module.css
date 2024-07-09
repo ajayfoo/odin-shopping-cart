@@ -19,7 +19,7 @@
   display: block;
   margin: 0 auto;
   font-size: var(--normal-font);
-  padding: calc(var(--x-small-gap) * 1.8) var(--medium-gap) var(--x-small-gap);
+  padding: calc(var(--x-small-gap) * 1.4) var(--medium-gap) var(--x-small-gap);
   background-color: var(--primary);
   color: var(--on-primary);
   border: none;

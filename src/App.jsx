@@ -35,10 +35,13 @@ function App({ products }) {
   const onRemove = (id) => {
     setCartItems(cartItems.filter((c) => c.id !== id));
   };
+  const clearCart = () => {
+    setCartItems([]);
+  };
   return (
     <>
       <MainNavbar cartCount={cartCount} />
-      <Outlet context={{ products, onAdd, cartItems, onRemove }} />
+      <Outlet context={{ products, onAdd, cartItems, onRemove, clearCart }} />
     </>
   );
 }

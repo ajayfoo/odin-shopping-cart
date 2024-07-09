@@ -20,11 +20,11 @@ describe("Cart", () => {
   it("renders it zero cart item", () => {
     useOutletContext.mockReturnValue({ cartItems: [] });
     render(<Cart />);
-    const noItemsAccName = "No items in the cart";
-    const noItems = screen.getByRole("paragraph", noItemsAccName);
+    const noItemsText = "No items in the cart";
+    const noItems = screen.getByText(noItemsText);
 
     expect(noItems).toBeVisible();
-    expect(noItems).toHaveTextContent(noItemsAccName);
+    expect(noItems).toHaveTextContent(noItemsText);
   });
 
   it("renders some cart items", () => {
@@ -54,7 +54,7 @@ describe("Cart", () => {
     await user.click(removeBtn);
     expect(onRemove).toBeCalledTimes(1);
   });
-  it("renders Summay when cart is not empty", () => {
+  it("renders Summary when cart is not empty", () => {
     useOutletContext.mockReturnValue({ cartItems });
     render(<Cart />);
     screen.getByRole("generic", { name: "summary of cart items and checkout" });

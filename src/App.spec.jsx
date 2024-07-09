@@ -185,4 +185,29 @@ describe("App", () => {
       expect(cartItem).not.toBeInTheDocument();
     });
   });
+  it("clears cart when checkout is clicked", async () => {
+    const user = userEvent.setup();
+    const router = createMemoryRouter(getRoutes(products));
+    render(<RouterProvider router={router} />);
+
+    const cartLink = screen.getByRole("link", { name: "cart" });
+
+    const sampleProduct = products[0];
+    const productCard = screen.getByRole("article", {
+      name: sampleProduct.name + " product card",
+    });
+    const addToCartBtn = getByRole(productCard, "button", {
+      name: "Add To Cart",
+    });
+
+    await user.click(addToCartBtn);
+    await user.click(cartLink);
+
+    const checkoutBtn = screen.getByRole("button", { name: "Checkout" });
+
+    await user.click(checkoutBtn);
+
+    const noItems = screen.getByText("No items in the cart");
+    expect(noItems).toBeVisible();
+  });
 });

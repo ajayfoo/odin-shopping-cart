@@ -11,7 +11,7 @@ async function init() {
     id: p.id,
     name: p.title,
     imgSrc: p.image,
-    price: p.price,
+    price: Number(p.price).toFixed(),
   }));
   const router = createBrowserRouter(getRoutes(normalizedProducts));
   ReactDOM.createRoot(document.getElementById("root")).render(

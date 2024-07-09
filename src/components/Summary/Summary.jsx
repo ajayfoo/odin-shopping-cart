@@ -17,7 +17,7 @@ const Summary = ({ cartItems }) => {
       <h2>Summary</h2>
       <div className={classes.total}>
         <p>Total</p>
-        <p aria-label="total price">{totalCartItemsPrice}</p>
+        <p aria-label="total price">{totalCartItemsPrice} INR</p>
       </div>
       <button onClick={clearCart} type="button">
         Checkout

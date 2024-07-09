@@ -22,14 +22,16 @@ describe("Summary", () => {
     render(<Summary cartItems={cartItems} />);
     screen.getByRole("generic", { name: "summary of cart items and checkout" });
     const heading = screen.getByRole("heading", { name: "Summary", level: 2 });
-    const totalPara = screen.getByText("Total");
-    const total = screen.getByRole("paragraph", { name: "total price" });
+    const total = screen.getByText("Total");
+    const totalPrice = screen.getByRole("paragraph", { name: "total price" });
     const checkoutBtn = screen.getByRole("button", { name: "Checkout" });
 
-    [heading, totalPara, total, checkoutBtn].forEach((e) =>
+    [heading, total, totalPrice, checkoutBtn].forEach((e) =>
       expect(e).toBeVisible()
     );
-    expect(total).toHaveTextContent(totalCartItemsPrice.toString());
+    expect(totalPrice).toHaveTextContent(
+      totalCartItemsPrice.toString() + " INR"
+    );
   });
 
   it("calls clearCart when checkout is clicked", async () => {

@@ -42,7 +42,12 @@ describe("App", () => {
     });
 
     await user.click(addToCartBtn);
-    expect(shoppingCartItemsCountBubble).toHaveTextContent("1");
+    await user.click(addToCartBtn);
+    await user.click(addToCartBtn);
+    const numberOfTimesClicked = 3;
+    expect(shoppingCartItemsCountBubble).toHaveTextContent(
+      numberOfTimesClicked.toString()
+    );
   });
 
   it("adds product(s) to cart when Add To Cart is clicked", async () => {

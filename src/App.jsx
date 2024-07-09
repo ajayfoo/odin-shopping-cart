@@ -5,7 +5,7 @@ import { useState } from "react";
 
 function App({ products }) {
   const [cartItems, setCartItems] = useState([]);
-  const cartCount = cartItems.length;
+  const cartCount = cartItems.reduce((acc, curr) => (acc += curr.count), 0);
   const onAdd = (imgSrc, name, price, count, id) => {
     const duplicateIndex = cartItems.findIndex((e) => e.id === id);
     if (duplicateIndex === -1) {

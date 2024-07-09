@@ -3,7 +3,15 @@ import PropTypes from "prop-types";
 import Counter from "../Counter/Counter";
 import classes from "./CartItemCard.module.css";
 
-const CartItemCard = ({ imgSrc, name, price, id, initialCount, onRemove }) => {
+const CartItemCard = ({
+  imgSrc,
+  name,
+  price,
+  id,
+  initialCount,
+  onRemove,
+  onChange,
+}) => {
   const MIN_COUNT = 1;
   const [count, setCount] = useState(initialCount);
 
@@ -12,10 +20,14 @@ const CartItemCard = ({ imgSrc, name, price, id, initialCount, onRemove }) => {
       handleRemove();
       return;
     }
-    setCount(count - 1);
+    const newCount = count - 1;
+    setCount(newCount);
+    onChange(id, newCount);
   };
   const handleIncrement = () => {
-    setCount(count + 1);
+    const newCount = count + 1;
+    setCount(newCount);
+    onChange(id, newCount);
   };
 
   const handleRemove = () => {
@@ -26,11 +38,13 @@ const CartItemCard = ({ imgSrc, name, price, id, initialCount, onRemove }) => {
     const num = parseInt(value);
     if (isNaN(num)) {
       setCount(MIN_COUNT);
+      onChange(id, MIN_COUNT);
     } else {
       if (num <= 0) {
         handleRemove();
       }
       setCount(num);
+      onChange(id, num);
     }
   };
 
@@ -67,6 +81,7 @@ CartItemCard.propTypes = {
   price: PropTypes.number.isRequired,
   initialCount: PropTypes.number.isRequired,
   onRemove: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
 };
 

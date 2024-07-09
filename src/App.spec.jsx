@@ -215,4 +215,42 @@ describe("App", () => {
     const noItems = screen.getByText("No items in the cart");
     expect(noItems).toBeVisible();
   });
+
+  it("increments cart count of bubble when cart item card's increment button is clicked", async () => {
+    const user = userEvent.setup();
+    const router = createMemoryRouter(getRoutes(products));
+    render(<RouterProvider router={router} />);
+
+    const cartLink = screen.getByRole("link", { name: "cart" });
+    const shoppingCartItemsCountBubble = screen.getByRole("alert", {
+      name: "shopping cart items count",
+    });
+
+    const sampleProduct = products[0];
+    const productCard = screen.getByRole("article", {
+      name: sampleProduct.name + " product card",
+    });
+    const addToCartBtn = getByRole(productCard, "button", {
+      name: "Add To Cart",
+    });
+
+    await user.click(addToCartBtn);
+    await user.click(addToCartBtn);
+    await user.click(cartLink);
+
+    let expectedCountInCart = 2;
+
+    const cartItem = screen.getByRole("article", {
+      name:
+        expectedCountInCart + " " + sampleProduct.name + "(s) cart item card",
+    });
+    const incrementBtn = getByRole(cartItem, "button", { name: "increment" });
+
+    await user.click(incrementBtn);
+    ++expectedCountInCart;
+
+    expect(shoppingCartItemsCountBubble).toHaveTextContent(
+      expectedCountInCart.toString()
+    );
+  });
 });

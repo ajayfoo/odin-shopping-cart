@@ -3,7 +3,7 @@ import classes from "./Cart.module.css";
 import CartItemCard from "../CartItemCard/CartItemCard";
 import Summary from "../Summary/Summary";
 export default function Cart() {
-  const { cartItems, onRemove } = useOutletContext();
+  const { cartItems, onRemove, onChange } = useOutletContext();
   let content = null;
   if (cartItems.length > 0) {
     content = (
@@ -16,6 +16,7 @@ export default function Cart() {
               imgSrc={c.imgSrc}
               initialCount={c.count}
               onRemove={() => onRemove(c.id)}
+              onChange={onChange}
               id={c.id}
               key={c.id}
             />

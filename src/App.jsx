@@ -38,10 +38,24 @@ function App({ products }) {
   const clearCart = () => {
     setCartItems([]);
   };
+  const onChange = (id, newCount) => {
+    const targetIndex = cartItems.findIndex((e) => e.id === id);
+    const target = cartItems[targetIndex];
+    setCartItems([
+      ...cartItems.slice(0, targetIndex),
+      {
+        ...target,
+        count: newCount,
+      },
+      ...cartItems.slice(targetIndex + 1),
+    ]);
+  };
   return (
     <>
       <MainNavbar cartCount={cartCount} />
-      <Outlet context={{ products, onAdd, cartItems, onRemove, clearCart }} />
+      <Outlet
+        context={{ products, onAdd, cartItems, onRemove, clearCart, onChange }}
+      />
     </>
   );
 }

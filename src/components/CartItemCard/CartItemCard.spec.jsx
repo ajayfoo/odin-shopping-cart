@@ -17,6 +17,7 @@ describe("CartItemCard", () => {
         initialCount={count}
         id={id}
         onRemove={vi.fn()}
+        onChange={vi.fn()}
       />
     );
 
@@ -56,6 +57,7 @@ describe("CartItemCard", () => {
         initialCount={count}
         id={id}
         onRemove={vi.fn()}
+        onChange={vi.fn()}
       />
     );
     const countEle = screen.getByTestId("curr-count");
@@ -81,6 +83,7 @@ describe("CartItemCard", () => {
         initialCount={count}
         id={id}
         onRemove={vi.fn()}
+        onChange={vi.fn()}
       />
     );
     const countEle = screen.getByTestId("curr-count");
@@ -104,6 +107,7 @@ describe("CartItemCard", () => {
         initialCount={count}
         id={id}
         onRemove={onRemove}
+        onChange={vi.fn()}
       />
     );
     const removeBtn = screen.getByRole("button", { name: "Remove" });
@@ -123,6 +127,7 @@ describe("CartItemCard", () => {
         initialCount={1}
         id={id}
         onRemove={onRemove}
+        onChange={vi.fn()}
       />
     );
 
@@ -130,5 +135,27 @@ describe("CartItemCard", () => {
 
     await user.click(decrementBtn);
     expect(onRemove).toHaveBeenCalledTimes(1);
+  });
+  it("calls onChange when count is changed", async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    const { name, imgSrc, id, price } = cartItems[0];
+    let count = 2;
+    render(
+      <CartItemCard
+        name={name}
+        imgSrc={imgSrc}
+        price={price}
+        initialCount={count}
+        id={id}
+        onRemove={vi.fn()}
+        onChange={onChange}
+      />
+    );
+
+    const decrementBtn = screen.getByTestId("decr-count");
+
+    await user.click(decrementBtn);
+    expect(onChange).toHaveBeenCalledOnce();
   });
 });

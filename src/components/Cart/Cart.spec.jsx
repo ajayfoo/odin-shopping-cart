@@ -41,7 +41,8 @@ describe("Cart", () => {
   it("calls onRemove when Remove button is clicked", async () => {
     const user = userEvent.setup();
     const onRemove = vi.fn();
-    useOutletContext.mockReturnValue({ cartItems, onRemove });
+    const onChange = vi.fn();
+    useOutletContext.mockReturnValue({ cartItems, onRemove, onChange });
     render(<Cart />);
     const cartItem = cartItems[0];
 
@@ -53,6 +54,29 @@ describe("Cart", () => {
 
     await user.click(removeBtn);
     expect(onRemove).toBeCalledTimes(1);
+  });
+  it("calls onChange when count of a cart item is changed", async () => {
+    const user = userEvent.setup();
+    const onChange = vi.fn();
+    useOutletContext.mockReturnValue({
+      cartItems,
+      onRemove: vi.fn(),
+      onChange,
+    });
+    render(<Cart />);
+    const cartItem = cartItems[0];
+
+    const itemCard = screen.getByRole("article", {
+      name: cartItem.count + " " + cartItem.name + "(s) cart item card",
+    });
+
+    const incrementBtn = getByRole(itemCard, "button", { name: "increment" });
+    const decrementBtn = getByRole(itemCard, "button", { name: "decrement" });
+
+    await user.click(incrementBtn);
+    await user.click(decrementBtn);
+
+    expect(onChange).toBeCalledTimes(2);
   });
   it("renders Summary when cart is not empty", () => {
     useOutletContext.mockReturnValue({ cartItems });

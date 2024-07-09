@@ -28,7 +28,7 @@ describe("Cart", () => {
   });
 
   it("renders some cart items", () => {
-    useOutletContext.mockReturnValue({ cartItems });
+    useOutletContext.mockReturnValue({ cartItems, onChange: vi.fn() });
     render(<Cart />);
     const cartItem = cartItems[0];
 
@@ -79,7 +79,7 @@ describe("Cart", () => {
     expect(onChange).toBeCalledTimes(2);
   });
   it("renders Summary when cart is not empty", () => {
-    useOutletContext.mockReturnValue({ cartItems });
+    useOutletContext.mockReturnValue({ cartItems, onChange: vi.fn() });
     render(<Cart />);
     screen.getByRole("generic", { name: "summary of cart items and checkout" });
   });

@@ -11,4 +11,8 @@ function makeid(length) {
   return result;
 }
 
-export { makeid };
+async function getAllProducts() {
+  return fetch("https://fakestoreapi.com/products").then((res) => res.json());
+}
+
+export { makeid, getAllProducts };

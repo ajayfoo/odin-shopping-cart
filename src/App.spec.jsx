@@ -1,4 +1,4 @@
-import { act, getByRole, render, screen } from "@testing-library/react";
+import { findByRole, getByRole, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
@@ -18,22 +18,18 @@ const fetchMock = vi.fn(() => {
 vi.stubGlobal("fetch", fetchMock);
 
 describe("App", async () => {
-  it("renders home page", async () => {
+  it("renders home page", () => {
     const router = createMemoryRouter(getRoutes());
-    await act(async () => {
-      render(<RouterProvider router={router} />);
-    });
+    render(<RouterProvider router={router} />);
     const homeEle = screen.getByRole("generic", { name: "home page" });
     expect(homeEle).toBeVisible();
   });
 
-  it("renders cart page when on /cart", async () => {
+  it("renders cart page when on /cart", () => {
     const router = createMemoryRouter(getRoutes(), {
       initialEntries: ["/cart"],
     });
-    await act(async () => {
-      render(<RouterProvider router={router} />);
-    });
+    render(<RouterProvider router={router} />);
 
     const cartPage = screen.getByRole("generic", { name: "cart page" });
 
@@ -44,20 +40,17 @@ describe("App", async () => {
     const user = userEvent.setup();
     const router = createMemoryRouter(getRoutes());
 
-    await act(async () => {
-      render(<RouterProvider router={router} />);
-    });
+    render(<RouterProvider router={router} />);
 
-    screen.debug();
     const shoppingCartItemsCountBubble = screen.getByRole("alert", {
       name: "shopping cart items count",
     });
 
     const sampleProduct = products[0];
-    const productCard = screen.getByRole("article", {
+    const productCard = await screen.findByRole("article", {
       name: sampleProduct.name + " product card",
     });
-    const addToCartBtn = getByRole(productCard, "button", {
+    const addToCartBtn = await findByRole(productCard, "button", {
       name: "Add To Cart",
     });
 
@@ -73,48 +66,44 @@ describe("App", async () => {
   it("adds product(s) to cart when Add To Cart is clicked", async () => {
     const user = userEvent.setup();
     const router = createMemoryRouter(getRoutes(products));
-    await act(async () => {
-      render(<RouterProvider router={router} />);
-    });
+    render(<RouterProvider router={router} />);
 
     const cartLink = screen.getByRole("link", { name: "cart" });
 
     const sampleProduct = products[0];
-    const productCard = screen.getByRole("article", {
+    const productCard = await screen.findByRole("article", {
       name: sampleProduct.name + " product card",
     });
-    const addToCartBtn = getByRole(productCard, "button", {
+    const addToCartBtn = await findByRole(productCard, "button", {
       name: "Add To Cart",
     });
 
     await user.click(addToCartBtn);
     await user.click(cartLink);
 
-    screen.getByRole("article", {
+    await screen.findByRole("article", {
       name: "1 " + sampleProduct.name + "(s) cart item card",
     });
   });
   it("adds product(s) to cart and removes corresponding cart item when Remove button is clicked", async () => {
     const user = userEvent.setup();
     const router = createMemoryRouter(getRoutes(products));
-    await act(async () => {
-      render(<RouterProvider router={router} />);
-    });
+    render(<RouterProvider router={router} />);
 
     const cartLink = screen.getByRole("link", { name: "cart" });
 
     const sampleProduct = products[0];
-    const productCard = screen.getByRole("article", {
+    const productCard = await screen.findByRole("article", {
       name: sampleProduct.name + " product card",
     });
-    const addToCartBtn = getByRole(productCard, "button", {
+    const addToCartBtn = await findByRole(productCard, "button", {
       name: "Add To Cart",
     });
 
     await user.click(addToCartBtn);
     await user.click(cartLink);
 
-    const cartItem = screen.getByRole("article", {
+    const cartItem = await screen.findByRole("article", {
       name: "1 " + sampleProduct.name + "(s) cart item card",
     });
 
@@ -131,12 +120,10 @@ describe("App", async () => {
     const user = userEvent.setup();
     const MIN_COUNT = 1;
     const router = createMemoryRouter(getRoutes(products));
-    await act(async () => {
-      render(<RouterProvider router={router} />);
-    });
+    render(<RouterProvider router={router} />);
 
     const sampleProduct = products[0];
-    const productCard = screen.getByRole("article", {
+    const productCard = await screen.findByRole("article", {
       name: sampleProduct.name + " product card",
     });
     const incrementBtn = getByRole(productCard, "button", {
@@ -160,14 +147,12 @@ describe("App", async () => {
   it("adds products to the same cart item if the same product exits in the cart", async () => {
     const user = userEvent.setup();
     const router = createMemoryRouter(getRoutes(products));
-    await act(async () => {
-      render(<RouterProvider router={router} />);
-    });
+    render(<RouterProvider router={router} />);
 
     const cartLink = screen.getByRole("link", { name: "cart" });
 
     const sampleProduct = products[0];
-    const productCard = screen.getByRole("article", {
+    const productCard = await screen.findByRole("article", {
       name: sampleProduct.name + " product card",
     });
     const addToCartBtn = getByRole(productCard, "button", {
@@ -190,14 +175,12 @@ describe("App", async () => {
     it("removes cart item when count is zero", async () => {
       const user = userEvent.setup();
       const router = createMemoryRouter(getRoutes(products));
-      await act(async () => {
-        render(<RouterProvider router={router} />);
-      });
+      render(<RouterProvider router={router} />);
 
       const cartLink = screen.getByRole("link", { name: "cart" });
 
       const sampleProduct = products[0];
-      const productCard = screen.getByRole("article", {
+      const productCard = await screen.findByRole("article", {
         name: sampleProduct.name + " product card",
       });
       const addToCartBtn = getByRole(productCard, "button", {
@@ -223,14 +206,12 @@ describe("App", async () => {
   it("clears cart when checkout is clicked", async () => {
     const user = userEvent.setup();
     const router = createMemoryRouter(getRoutes(products));
-    await act(async () => {
-      render(<RouterProvider router={router} />);
-    });
+    render(<RouterProvider router={router} />);
 
     const cartLink = screen.getByRole("link", { name: "cart" });
 
     const sampleProduct = products[0];
-    const productCard = screen.getByRole("article", {
+    const productCard = await screen.findByRole("article", {
       name: sampleProduct.name + " product card",
     });
     const addToCartBtn = getByRole(productCard, "button", {
@@ -251,12 +232,10 @@ describe("App", async () => {
   it("increments cart count of bubble when cart item card's increment button is clicked", async () => {
     const user = userEvent.setup();
     const router = createMemoryRouter(getRoutes(products));
-    await act(async () => {
-      render(<RouterProvider router={router} />);
-    });
+    render(<RouterProvider router={router} />);
 
     const cartLink = screen.getByRole("link", { name: "cart" });
-    const shoppingCartItemsCountBubble = screen.getByRole("alert", {
+    const shoppingCartItemsCountBubble = await screen.findByRole("alert", {
       name: "shopping cart items count",
     });
 
